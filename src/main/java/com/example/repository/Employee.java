@@ -27,7 +27,7 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer empId;
 	
-	@Column(name = "ENAME")
+	@Column(name = "NAME")
 	private String name;
 	
 	@Column(name = "CITY")

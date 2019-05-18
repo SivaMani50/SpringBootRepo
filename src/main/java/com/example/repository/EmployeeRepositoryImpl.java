@@ -28,7 +28,7 @@ public class EmployeeRepositoryImpl extends NamedParameterJdbcDaoSupport impleme
 	@Override
 	public List<Employee> findAllEmployees() {
 		List<Employee> employees = jdbcTemplate.query("select * from employee", (rs, rowNum) -> new Employee(rs.getInt("EMPID"),
-                rs.getString("ENAME"), rs.getString("CITY")));
+                rs.getString("NAME"), rs.getString("CITY")));
 		return employees;
 	}
 
@@ -39,7 +39,7 @@ public class EmployeeRepositoryImpl extends NamedParameterJdbcDaoSupport impleme
 		parameterSource.addValue("NAME", employee.getName());
 		parameterSource.addValue("CITY", employee.getCity());
 		
-		String sql = "insert into employee(EMPID, ENAME, CITY) values (:EID, :NAME, :CITY)";
+		String sql = "insert into employee(EMPID, NAME, CITY) values (:EID, :NAME, :CITY)";
 		return namedParameterJdbcTemplate.update(sql, parameterSource);
 	}
 
@@ -50,7 +50,7 @@ public class EmployeeRepositoryImpl extends NamedParameterJdbcDaoSupport impleme
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		parameterSource.addValue("EMPID", empId);
 		return namedParameterJdbcTemplate.queryForObject(query, parameterSource, 
-				(rs, rowNum) -> new Employee(rs.getInt("EMPID"), rs.getString("ENAME"), rs.getString("CITY")));
+				(rs, rowNum) -> new Employee(rs.getInt("EMPID"), rs.getString("NAME"), rs.getString("CITY")));
 	}
 
 	@Override
@@ -63,10 +63,10 @@ public class EmployeeRepositoryImpl extends NamedParameterJdbcDaoSupport impleme
 
 	@Override
 	public void updateEmployee(Employee employee) {
-		String query = "update Employee set ENAME = :ENAME, CITY = :CITY where EMPID = :EMPID";
+		String query = "update Employee set NAME = :NAME, CITY = :CITY where EMPID = :EMPID";
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		parameterSource.addValue("EMPID", employee.getEmpId());
-		parameterSource.addValue("ENAME", employee.getName());
+		parameterSource.addValue("NAME", employee.getName());
 		parameterSource.addValue("CITY", employee.getCity());
 		
 		namedParameterJdbcTemplate.update(query, parameterSource);
